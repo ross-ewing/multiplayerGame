@@ -1,9 +1,4 @@
 var socket = io();
-socket.on('message', function(data){
-    console.log(data)
-});
-
-socket.on('disconnect');
 
 var movement = {
     up: false,
@@ -33,7 +28,7 @@ socket.on('state', function(players) {
     }
 });
 
-var reset = function(players){
+var reset = function(){
         console.log('reset')
 };
 
