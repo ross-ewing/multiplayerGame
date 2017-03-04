@@ -42,20 +42,17 @@ function draw() {
         context.clearRect(0, 0, canvas.width, canvas.height);
         for (var id in players) {
             var player = players[id];
-            storeLastPosition(player.x, player.y, id);
-
+            //storeLastPosition(player.x, player.y, id);
             context.fillStyle = player.color;
-            console.log(player.color);
             context.beginPath();
             context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
             context.fill();
-
-            for (var i = 0; i < positions[id].length; i++) {
-                    context.fillStyle = player.color;
-                    context.beginPath();
-                    context.arc(positions[id][i].x, positions[id][i].y, 10, 0, 2 * Math.PI, true);
-                    context.fill();
-            }
+            //for (var i = 0; i < positions[id].length; i++) {
+            //        context.fillStyle = player.color;
+            //        context.beginPath();
+            //        context.arc(positions[id][i].x, positions[id][i].y, 10, 0, 2 * Math.PI, true);
+            //        context.fill();
+            //}
         }
     });
 }

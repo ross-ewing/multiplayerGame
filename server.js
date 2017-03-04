@@ -8,8 +8,8 @@ var app = express();
 var server = http.Server(app);
 var io = socketIO(server);
 
-app.set('port',5000);
 app.use('/static', express.static(__dirname + '/static'));
+app.set('port',5000);
 
 // Routing
 app.get('/', function(request, response) {
