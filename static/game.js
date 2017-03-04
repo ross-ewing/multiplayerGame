@@ -16,20 +16,54 @@ var canvas = document.getElementById('canvas');
 canvas.width = 800;
 canvas.height = 600;
 
+var motionTrailLength = 100;
+var positions = {};
 
-var context = canvas.getContext('2d');
-socket.on('state', function(players) {
-    context.fillStyle = '#0095DD';
-    for (var id in players) {
-        var player = players[id];
-        context.beginPath();
-        context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
-        context.fill();
+function storeLastPosition(xPos, yPos, playerid) {
+    // push an item
+    if (positions[playerid] == null) {
+        positions[playerid] = []
     }
-});
+
+    positions[playerid].push({
+        x: xPos,
+        y: yPos
+    });
+
+    //get rid of first item
+    if (positions[playerid].length > motionTrailLength) {
+        positions[playerid].shift();
+    }
+}
+
+function draw() {
+    socket.on('state', function (players) {
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        for (var id in players) {
+            var player = players[id];
+            storeLastPosition(player.x, player.y, id);
+
+            context.fillStyle = player.color;
+            console.log(player.color);
+            context.beginPath();
+            context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
+            context.fill();
+
+            for (var i = 0; i < positions[id].length; i++) {
+                    context.fillStyle = player.color;
+                    context.beginPath();
+                    context.arc(positions[id][i].x, positions[id][i].y, 10, 0, 2 * Math.PI, true);
+                    context.fill();
+            }
+        }
+    });
+}
+
+draw();
 
 var reset = function(){
-        console.log('reset')
+    console.log('reset')
 };
 
 
